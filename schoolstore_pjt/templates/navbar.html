@@ -1,0 +1,44 @@
+{% load static %}
+<nav class="navbar navbar-expand-md navbar-dark">
+  <!-- Logo and Title -->
+  <div class="navbar-brand">
+    <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt="Logo" class="navbar-logo"></a>
+    <a href="{% url 'home' %}"><div class="navbar-title">THE SCHOOL STORE</div></a>
+  </div>
+
+  <!-- Navbar Items -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'home' %}">Home</a>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle department-link" href="#" id="departmentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Department
+      </a>
+      <div class="dropdown-menu" aria-labelledby="departmentDropdown">
+      {% for department in departments_list %}
+          <a class="dropdown-item department-item" href={{ department.wikipedia_link }}>{{ department.name }}</a>
+      {% endfor %}
+
+      </div>
+    </li>
+    <!-- Add login, registration, and contact links -->
+    {% if not user.is_authenticated %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'login_view' %}">Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'register' %}">Registration</a>
+    </li>
+    {% else %}
+     <li class="nav-item">
+      <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
+    </li>
+    <li class="nav-item welcome_user" style="font-weight: bold; color: #ff6600;">
+      <span class="nav-link">Welcome, {{ user.username }}</span>
+    </li>
+
+    {% endif %}
+  </ul>
+
+</nav>
